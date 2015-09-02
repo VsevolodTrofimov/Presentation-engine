@@ -1,0 +1,59 @@
+body {
+  font-family: "Segoe UI";
+  font-size: 18pt;
+  color: #383838; }
+
+h1 {
+  color: #133558; }
+
+h1.main {
+  font-weight: normal;
+  border: 3pt solid #133558;
+  padding: 8pt; }
+
+h1.standart {
+  margin: 8pt 16pt;
+  font-weight: 300;
+  padding: 0; }
+
+#screen-size-sample, #screen-size-sample-panel-1, #screen-size-sample-panel-2 {
+  background: #133558;
+  margin-top: 4.2vh;
+  height: 49.2vh;
+  width: 78vh;
+  position: absolute;
+  top: 30vh;
+  left: 50%;
+  margin-left: -39vh; }
+
+#screen-size-sample-panel-1, #screen-size-sample-panel-2 {
+  height: 8vh;
+  background: #f3f3f3; }
+
+#screen-size-sample-panel-2 {
+  top: 75.2vh;
+  height: 4vh; }
+
+.center-wrap {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+}
+
+.corner-tip {
+  position: absolute;
+  bottom: 5vmin;
+  right: 5vmin; }
+
+.img-fill {
+  position: absolute;
+  top: 30vh;
+  height: 60vh;
+  width: 100vw;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%; }
