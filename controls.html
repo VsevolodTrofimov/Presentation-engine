@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<button onclick="forward()">></button><br>
+	<button onclick="back()"><</button>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script>
+		var socket = io();
+		function forward(){
+			socket.emit("action","forward");
+		}
+		function back(){
+			socket.emit("action","back");
+		}
+	</script>
+</body>
+</html>

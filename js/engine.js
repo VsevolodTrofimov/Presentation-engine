@@ -1,4 +1,5 @@
-var nextPage, previousPage;
+"use strict";
+var nextPage, previousPage, slideAction,current=0;
 
 
 var PageTransitions = (function() {
@@ -6,7 +7,6 @@ var PageTransitions = (function() {
 	var $main = $( '#pt-main' ),
 		$pages = $main.children( 'div.slide' ),
 		pagesCount = $pages.length,
-		current = 0,
 		isAnimating = false,
 		endCurrPage = false,
 		endNextPage = false,
@@ -30,34 +30,53 @@ var PageTransitions = (function() {
 
 		$pages.eq( current ).addClass( 'pt-page-current' );
 
+		if(slides.s0.beforeSwitch){
+			slides.s0.beforeSwitch();
+		}
+
 	}
 
 
 
-	nextPage = function(options ) {
-		var animation = (options.animation) ? options.animation : options;
+	slideAction = function() {
+		if(slides["s"+current]) {
+			slides["s"+current].actionsCount++;
+			if(slides["s"+current].actions) {
+				if(slides["s"+current].actions["a"+slides["s"+current].actionsCount]) {
+					slides["s"+current].actions["a"+slides["s"+current].actionsCount]();
+				}	
+			}
+		}
+	}
 
+	nextPage = function() {
+		var animation;
+		
 		if( isAnimating ) {
 			return false;
 		}
 
-		isAnimating = true;
-		
 		var $currPage = $pages.eq( current );
 
-		if(options.showPage){
-			if( options.showPage < pagesCount - 1 ) {
-				current = options.showPage;
-			} else {
-				current = 0;
+		if( current < pagesCount - 1 ) {
+			isAnimating = true;
+			++current;
+		}else {
+			return false;
+		}
+
+		console.log(current, slides["s"+current]);
+		if(slides["s"+current]) {
+			slides["s"+current].actionsCount = 0;
+
+			if(slides["s"+current].beforeSwitch) {
+				slides["s"+current].beforeSwitch();
 			}
-		} else{
-			if( current < pagesCount - 1 ) {
-				++current;
-			}
-			else {
-				current = 0;
-			}
+		}
+		if(slides["s"+(current-1)]&&slides["s"+(current-1)].transition) {
+				animation = slides["s"+(current-1)].transition;
+		}else {
+			animation = "slideLeft";
 		}
 
 		var $nextPage = $pages.eq( current ).addClass( 'pt-page-current' ),
@@ -87,31 +106,36 @@ var PageTransitions = (function() {
 
 	}
 
-	previousPage = function(options ) {
-		var animation = (options.animation) ? options.animation : options;
-
+	previousPage = function() {
+		var animation;
+		
 		if( isAnimating ) {
 			return false;
 		}
 
-		isAnimating = true;
-		
 		var $currPage = $pages.eq( current );
 
-		if( options.showPage ){
-			if( options.showPage < pagesCount - 1 ) {
-				current = options.showPage;
-			} else {
-				current = 0;
-			}
-		} else{
-			if( current > 0) {
-				--current;
-			}
-			else {
-				current = $pages.length-1;
+		if( current > 0 ) {
+			isAnimating = true;
+			--current;
+		}else {
+			return false;
+		}
+
+		if(slides["s"+current]) {
+			slides["s"+current].actionsCount=0;
+			
+			if(slides["s"+current].beforeSwitch) {
+				slides["s"+current].beforeSwitch();
 			}
 		}
+
+		if(slides["s"+current]&&slides["s"+current].transition) {
+				animation = slides["s"+current].transition;
+		}else {
+			animation = "slideLeft";
+		}
+
 		animation = reverseEffect( animation );
 		var $nextPage = $pages.eq( current ).addClass( 'pt-page-current' ),
 			outClass = '', inClass = '';
@@ -155,14 +179,6 @@ var PageTransitions = (function() {
 	}
 
 	init();
-
-	return { 
-		init : init,
-		nextPage : nextPage,
-	};
-
-
-
 
 	function onEndAnimation( $outpage, $inpage ) {
 		endCurrPage = false;

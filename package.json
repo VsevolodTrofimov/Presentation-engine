@@ -1,0 +1,24 @@
+{
+  "name": "presentation-engine",
+  "version": "1.0.0",
+  "description": "-",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VsevolodTrofimov/Presentation-engine.git"
+  },
+  "author": "Vsevolod Trofimov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VsevolodTrofimov/Presentation-engine/issues"
+  },
+  "homepage": "https://github.com/VsevolodTrofimov/Presentation-engine#readme",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.4",
+    "socket.io": "^1.3.6"
+  }
+}

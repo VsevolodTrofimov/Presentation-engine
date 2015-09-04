@@ -1,15 +1,42 @@
-var effect = 'slideUp';
+//page transition effects (s+position of slide being shown now)
+var slides = {
+	//slide shown on presentation launch
+	s0 : {
+		//slide change effect ( when changing to next slide in initiated)
+		transition : "fadeToTop",
+	},
+	s1 : {
+		transition : "slideUp",
+		//things to change on slide before transition begins
+		beforeSwitch: function (){
+			$("#screen-size-sample-panel-1").hide();
+			$("#screen-size-sample-panel-2").hide();
+		},
+		// in-slide action like appending or change of something
+		actions: {
+			a1 : function() {
+				$("#screen-size-sample-panel-1").fadeIn(200);
+			},
+			a2 : function() {
+				$("#screen-size-sample-panel-2").fadeIn(200);
+			}
+		}
+	},
+};
+
 $(document).ready(function() {
 		$(document).keyup(function(event) {
 			var key = event.which;
-			if(key == 39)
-			{
-				nextPage( effect );
+
+			if(key == 39) {
+				nextPage();
 			}
 
-			if(key == 37)
-			{
-				previousPage( effect );
+			if(key == 37) {
+				previousPage();
+			}
+			if(key == 69) {
+				slideAction();
 			}
 			
 		});
